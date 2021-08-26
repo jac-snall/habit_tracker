@@ -1,10 +1,75 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/services.dart';
 
-class StartView extends StatelessWidget {
+class StartView extends StatefulWidget {
   const StartView({Key? key}) : super(key: key);
 
   @override
+  _StartViewState createState() => _StartViewState();
+}
+
+class _StartViewState extends State<StartView> {
+  bool _textInput = false;
+
+  void _handleSubmit() {}
+
+  void _enableInput() {
+    setState(() {
+      _textInput = true;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    TextStyle? hintText = Theme.of(context)
+        .textTheme
+        .bodyText2
+        ?.copyWith(color: Color(0x7FFFFFFF));
+    Widget placeholder;
+
+    if (!_textInput) {
+      placeholder = AnimatedTextKit(
+        onTap: _enableInput,
+        animatedTexts: [
+          TyperAnimatedText(
+            'read a page',
+            textStyle: hintText,
+            speed: const Duration(milliseconds: 100),
+          ),
+          TyperAnimatedText(
+            'meditate',
+            textStyle: hintText,
+            speed: const Duration(milliseconds: 100),
+          ),
+          TyperAnimatedText(
+            'go for a walk',
+            textStyle: hintText,
+            speed: const Duration(milliseconds: 100),
+          ),
+        ],
+        repeatForever: true,
+      );
+    } else {
+      placeholder = TextField(
+        minLines: 1,
+        maxLines: 3,
+        autofocus: true,
+        textAlign: TextAlign.center,
+        textInputAction: TextInputAction.go,
+        style: Theme.of(context).textTheme.bodyText2,
+        decoration: InputDecoration(
+          hintText: 'read a page',
+          hintStyle: Theme.of(context)
+              .textTheme
+              .bodyText2
+              ?.copyWith(color: Color(0x7FFFFFFF)),
+          border: InputBorder.none,
+        ),
+        onEditingComplete: _handleSubmit,
+      );
+    }
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -14,23 +79,18 @@ class StartView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('I want to'),
-                TextField(
-                  minLines: 1,
-                  maxLines: 5,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyText2,
-                  decoration: InputDecoration(
-                    hintText: 'read a page',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(color: Color(0x7FFFFFFF)),
-                    border: InputBorder.none,
+                GestureDetector(
+                  onTap: _enableInput,
+                  behavior: HitTestBehavior.opaque,
+                  child: Column(
+                    children: [
+                      Text('I want to'),
+                      placeholder,
+                      Text('every day'),
+                    ],
                   ),
                 ),
-                Text('every day'),
-                TextButton(onPressed: null, child: Text('Next'))
+                TextButton(onPressed: _handleSubmit, child: Text('Next'))
               ],
             ),
           ),
