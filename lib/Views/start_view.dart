@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/services.dart';
@@ -12,13 +11,22 @@ class StartView extends StatefulWidget {
 
 class _StartViewState extends State<StartView> {
   bool _textInput = false;
+  final inputTextController = TextEditingController();
 
-  void _handleSubmit() {}
+  void _handleSubmit() {
+    print(inputTextController.text);
+  }
 
   void _enableInput() {
     setState(() {
       _textInput = true;
     });
+  }
+
+  @override
+  void dispose() {
+    inputTextController.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,6 +61,7 @@ class _StartViewState extends State<StartView> {
       );
     } else {
       placeholder = TextField(
+        controller: inputTextController,
         minLines: 1,
         maxLines: 3,
         autofocus: true,
