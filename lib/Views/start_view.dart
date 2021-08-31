@@ -99,6 +99,9 @@ class _StartViewState extends State<StartView> {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 30,
+                ),
                 TextButton(onPressed: _handleSubmit, child: Text('Next'))
               ],
             ),
