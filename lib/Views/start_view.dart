@@ -15,6 +15,7 @@ class _StartViewState extends State<StartView> {
 
   void _handleSubmit() {
     print(inputTextController.text);
+    Navigator.of(context).popAndPushNamed('/home');
   }
 
   void _enableInput() {
@@ -102,7 +103,10 @@ class _StartViewState extends State<StartView> {
                 SizedBox(
                   height: 30,
                 ),
-                TextButton(onPressed: _handleSubmit, child: Text('Next'))
+                TextButton(
+                  onPressed: _handleSubmit,
+                  child: Text('Next'),
+                )
               ],
             ),
           ),
