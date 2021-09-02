@@ -50,7 +50,9 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/calender');
+                      },
                       child: Icon(
                         Icons.today,
                         size: 40,
@@ -60,7 +62,9 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/info');
+                      },
                       child: Icon(
                         Icons.info_outline,
                         size: 40,
