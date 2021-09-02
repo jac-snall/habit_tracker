@@ -9,22 +9,73 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  bool _complete = false;
+
+  void _completeTask() {
+    setState(() {
+      _complete = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedTextKit(
-                animatedTexts: [
-                  FadeAnimatedText('Tap to complete'),
-                ],
-                repeatForever: true,
-              ),
-              Image(image: AssetImage('assets/images/cloud.png'))
-            ],
+          child: Container(
+            width: 310,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Spacer(),
+                Container(
+                  height: 50,
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      FadeAnimatedText('Tap to complete'),
+                    ],
+                    repeatForever: true,
+                  ),
+                ),
+                GestureDetector(
+                  child: Image(
+                    image: AssetImage(_complete
+                        ? 'assets/images/sun.png'
+                        : 'assets/images/cloud.png'),
+                  ),
+                  onTap: _completeTask,
+                ),
+                Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.today,
+                        size: 40,
+                      ),
+                      style: TextButton.styleFrom(
+                        minimumSize: Size(120, 60),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.info_outline,
+                        size: 40,
+                      ),
+                      style: TextButton.styleFrom(
+                        minimumSize: Size(120, 60),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 25,
+                )
+              ],
+            ),
           ),
         ),
       ),
