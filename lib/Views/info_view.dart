@@ -7,7 +7,7 @@ class InfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('info'),
+        title: const Text('info'),
       ),
     );
   }

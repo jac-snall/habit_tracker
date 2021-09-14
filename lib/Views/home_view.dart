@@ -22,13 +22,13 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Container(
+          child: SizedBox(
             width: 310,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(),
-                Container(
+                const Spacer(),
+                SizedBox(
                   height: 50,
                   child: AnimatedTextKit(
                     animatedTexts: [
@@ -45,7 +45,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   onTap: _completeTask,
                 ),
-                Spacer(),
+                const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -53,24 +53,24 @@ class _HomeViewState extends State<HomeView> {
                       onPressed: () {
                         Navigator.of(context).pushNamed('/calender');
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.today,
                         size: 40,
                       ),
                       style: TextButton.styleFrom(
-                        minimumSize: Size(120, 60),
+                        minimumSize: const Size(120, 60),
                       ),
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed('/info');
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.info_outline,
                         size: 40,
                       ),
                       style: TextButton.styleFrom(
-                        minimumSize: Size(120, 60),
+                        minimumSize: const Size(120, 60),
                       ),
                     ),
                   ],

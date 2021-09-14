@@ -14,7 +14,6 @@ class _StartViewState extends State<StartView> {
   final inputTextController = TextEditingController();
 
   void _handleSubmit() {
-    print(inputTextController.text);
     Navigator.of(context).popAndPushNamed('/home');
   }
 
@@ -35,7 +34,7 @@ class _StartViewState extends State<StartView> {
     TextStyle? hintText = Theme.of(context)
         .textTheme
         .bodyText2
-        ?.copyWith(color: Color(0x7FFFFFFF));
+        ?.copyWith(color: const Color(0x7FFFFFFF));
     Widget placeholder;
 
     if (!_textInput) {
@@ -74,7 +73,7 @@ class _StartViewState extends State<StartView> {
           hintStyle: Theme.of(context)
               .textTheme
               .bodyText2
-              ?.copyWith(color: Color(0x7FFFFFFF)),
+              ?.copyWith(color: const Color(0x7FFFFFFF)),
           border: InputBorder.none,
         ),
         onEditingComplete: _handleSubmit,
@@ -83,7 +82,7 @@ class _StartViewState extends State<StartView> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Container(
+          child: SizedBox(
             width: 300,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,18 +93,18 @@ class _StartViewState extends State<StartView> {
                   behavior: HitTestBehavior.opaque,
                   child: Column(
                     children: [
-                      Text('I want to'),
+                      const Text('I want to'),
                       placeholder,
-                      Text('every day'),
+                      const Text('every day'),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 TextButton(
                   onPressed: _handleSubmit,
-                  child: Text('Next'),
+                  child: const Text('Next'),
                 )
               ],
             ),

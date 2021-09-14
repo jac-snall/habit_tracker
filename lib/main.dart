@@ -5,10 +5,12 @@ import 'Views/calender_view.dart';
 import 'Views/info_view.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -24,18 +26,22 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
-        primaryColor: Color(0xFF8359FB),
-        scaffoldBackgroundColor: Color(0xFF8359FB),
+        primarySwatch: Colors.green,
+        primaryColor: const Color(0xFF8359FB),
+        scaffoldBackgroundColor: const Color(0xFF8359FB),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF8359FB),
+          elevation: 0,
+        ),
         textTheme: const TextTheme(
           bodyText2: TextStyle(color: Colors.white, fontSize: 36),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            backgroundColor: Color(0xFF5C3EB0),
+            backgroundColor: const Color(0xFF5C3EB0),
             primary: Colors.white,
-            textStyle: TextStyle(fontSize: 24),
-            minimumSize: Size(158, 52),
+            textStyle: const TextStyle(fontSize: 24),
+            minimumSize: const Size(158, 52),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -43,10 +49,10 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/': (context) => StartView(),
-        '/home': (context) => HomeView(),
-        '/calender': (context) => CalenderView(),
-        '/info': (context) => InfoView(),
+        '/': (context) => const StartView(),
+        '/home': (context) => const HomeView(),
+        '/calender': (context) => const CalenderView(),
+        '/info': (context) => const InfoView(),
       },
     );
   }
