@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dart_date/dart_date.dart';
 
 class CalenderView extends StatelessWidget {
   const CalenderView({Key? key}) : super(key: key);
@@ -32,14 +31,49 @@ class CalenderView extends StatelessWidget {
     'December',
   ];
 
+  static const _daysInMonth = [
+    31,
+    28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ];
+  int getDaysInMonth(int month, int year) {
+    if (month == 2) {
+      if (year % 4 == 0) {
+        if (year % 100 == 0) {
+          if (year % 400 == 0) {
+            return 29;
+          }
+          return 28;
+        }
+        return 29;
+      }
+      return 28;
+    }
+    return _daysInMonth[month - 1];
+  }
+
   Widget _buildCalenderPage(BuildContext context, int index) {
     final today = DateTime.now();
-    //final currentMonth = DateTime(today.year, today.month - index, 1);
-    final currentMonth = today.subMonths(index);
+
+    int currentMonth = (today.month - index) % 12;
+    if (currentMonth == 0) {
+      currentMonth = 12;
+    }
+    int currentYear = today.year - (index + currentMonth - 1) ~/ 12;
+
     //Create temporary list to show calendar
     List<Widget> _widgetList = [];
     var _image = const AssetImage('assets/images/cloud.png');
-    for (int i = 0; i < currentMonth.getDaysInMonth; i++) {
+    for (int i = 0; i < getDaysInMonth(currentMonth, currentYear); i++) {
       //_widgetList.add(Text(i.toString()));
       _widgetList.add(Image(image: _image));
     }
@@ -50,9 +84,7 @@ class CalenderView extends StatelessWidget {
 
     return Column(
       children: [
-        Text(_months[currentMonth.month - 1] +
-            ' ' +
-            currentMonth.year.toString()),
+        Text(_months[currentMonth - 1] + ' ' + currentYear.toString()),
         SizedBox(
           height: 400,
           width: 350,
