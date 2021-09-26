@@ -9,9 +9,24 @@ class CalenderView extends StatelessWidget {
       appBar: AppBar(
           //title: const Text('history'),
           ),
-      body: PageView.builder(
-        reverse: true,
-        itemBuilder: _buildCalenderPage,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            children: [
+              Flexible(
+                flex: 2,
+                child: PageView.builder(
+                  reverse: true,
+                  itemBuilder: _buildCalenderPage,
+                ),
+              ),
+              const Flexible(
+                child: Text('Current streak: 55\nLongest streak: 55'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -80,14 +95,11 @@ class CalenderView extends StatelessWidget {
     var _imageSun = const AssetImage('assets/images/sun.png');
     _widgetList[0] = Image(image: _imageSun);
     _widgetList[14] = Image(image: _imageSun);
-    //_widgetList[27] = Image(image: _imageSun);
 
     return Column(
       children: [
         Text(_months[currentMonth - 1] + ' ' + currentYear.toString()),
-        SizedBox(
-          height: 400,
-          width: 350,
+        Flexible(
           child: GridView.count(
             crossAxisCount: 7,
             children: _widgetList,
