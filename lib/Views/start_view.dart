@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 
 class StartView extends StatefulWidget {
   const StartView({Key? key}) : super(key: key);
@@ -14,7 +15,11 @@ class _StartViewState extends State<StartView> {
   final inputTextController = TextEditingController();
 
   void _handleSubmit() {
-    Navigator.of(context).popAndPushNamed('/home');
+    if (inputTextController.text.isNotEmpty) {
+      var box = Hive.box('AppData');
+      box.put('Habit', inputTextController.text);
+      Navigator.of(context).popAndPushNamed('/home');
+    }
   }
 
   void _enableInput() {

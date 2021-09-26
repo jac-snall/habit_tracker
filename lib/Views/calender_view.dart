@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class CalenderView extends StatelessWidget {
   const CalenderView({Key? key}) : super(key: key);
 
+  //Asset images
+  final _imageSun = const AssetImage('assets/images/sun.png');
+  final _imageCloud = const AssetImage('assets/images/cloud.png');
+
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box('AppData');
+    final currentStreak = box.get('currentStreak', defaultValue: 0);
+    final longestStreak = box.get('longestStreak', defaultValue: 0);
+
     return Scaffold(
       appBar: AppBar(
           //title: const Text('history'),
@@ -21,8 +30,11 @@ class CalenderView extends StatelessWidget {
                   itemBuilder: _buildCalenderPage,
                 ),
               ),
-              const Flexible(
-                child: Text('Current streak: 55\nLongest streak: 55'),
+              Flexible(
+                child: Text(
+                  'Current streak: ${currentStreak.toString()}\n'
+                  'Longest streak: ${longestStreak.toString()}',
+                ),
               ),
             ],
           ),
@@ -85,16 +97,27 @@ class CalenderView extends StatelessWidget {
     }
     int currentYear = today.year - (index + currentMonth - 1) ~/ 12;
 
+    //Hive box
+    var box = Hive.box('AppData');
+
     //Create temporary list to show calendar
     List<Widget> _widgetList = [];
-    var _image = const AssetImage('assets/images/cloud.png');
     for (int i = 0; i < getDaysInMonth(currentMonth, currentYear); i++) {
       //_widgetList.add(Text(i.toString()));
-      _widgetList.add(Image(image: _image));
+      var todayString = '$currentYear'
+          '${currentMonth.toString().padLeft(2, '0')}'
+          '${(i + 1).toString().padLeft(2, '0')}';
+      _widgetList.add(
+        Image(
+          image: box.get(
+            todayString,
+            defaultValue: false,
+          )
+              ? _imageSun
+              : _imageCloud,
+        ),
+      );
     }
-    var _imageSun = const AssetImage('assets/images/sun.png');
-    _widgetList[0] = Image(image: _imageSun);
-    _widgetList[14] = Image(image: _imageSun);
 
     return Column(
       children: [

@@ -3,8 +3,13 @@ import 'Views/start_view.dart';
 import 'Views/home_view.dart';
 import 'Views/calender_view.dart';
 import 'Views/info_view.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('AppData');
+
   runApp(const MyApp());
 }
 
@@ -48,12 +53,20 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      home: _getStartScreen(),
       routes: {
-        '/': (context) => const StartView(),
         '/home': (context) => const HomeView(),
         '/calender': (context) => const CalenderView(),
         '/info': (context) => const InfoView(),
       },
     );
+  }
+
+  Widget _getStartScreen() {
+    var box = Hive.box('AppData');
+    if (box.get('Habit') != null) {
+      return const HomeView();
+    }
+    return const StartView();
   }
 }

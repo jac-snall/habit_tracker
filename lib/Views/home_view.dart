@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -11,7 +13,35 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   bool _complete = false;
 
+  @override
+  void initState() {
+    var box = Hive.box('AppData');
+    _complete = box.get(DateFormat('yyyyMMdd').format(DateTime.now())) != null;
+    super.initState();
+  }
+
   void _completeTask() {
+    //Save date to hive box
+    var box = Hive.box('AppData');
+    box.put(DateFormat('yyyyMMdd').format(DateTime.now()), true);
+
+    //Updating streak
+    var currentStreak = box.get('currentStreak', defaultValue: 0);
+    if (box.get(
+      DateFormat('yyyyMMdd').format(DateTime.now().subtract(
+        const Duration(days: 1),
+      )),
+      defaultValue: false,
+    )) {
+      currentStreak++;
+    } else {
+      currentStreak = 1;
+    }
+    box.put('currentStreak', currentStreak);
+
+    var longestStreak = box.get('longestStreak', defaultValue: 0);
+    if (currentStreak > longestStreak) box.put('longestStreak', currentStreak);
+
     setState(() {
       _complete = true;
     });
@@ -19,6 +49,33 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    //Get habit name from hive
+    var box = Hive.box('AppData');
+    final habitName = box.get('Habit');
+
+    final centerWidget = _complete
+        ? [
+            const Image(image: AssetImage('assets/images/sun.png')),
+            const Text('Well done!'),
+          ]
+        : [
+            GestureDetector(
+              child: const Image(
+                image: AssetImage('assets/images/cloud.png'),
+              ),
+              onTap: _completeTask,
+            ),
+            SizedBox(
+              height: 50,
+              child: AnimatedTextKit(
+                animatedTexts: [
+                  FadeAnimatedText('Tap to complete'),
+                ],
+                repeatForever: true,
+              ),
+            ),
+          ];
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -28,22 +85,14 @@ class _HomeViewState extends State<HomeView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                SizedBox(
-                  height: 50,
-                  child: AnimatedTextKit(
-                    animatedTexts: [
-                      FadeAnimatedText('Tap to complete'),
-                    ],
-                    repeatForever: true,
+                Text('I want to $habitName'),
+                const Spacer(),
+                Flexible(
+                  flex: 5,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: centerWidget,
                   ),
-                ),
-                GestureDetector(
-                  child: Image(
-                    image: AssetImage(_complete
-                        ? 'assets/images/sun.png'
-                        : 'assets/images/cloud.png'),
-                  ),
-                  onTap: _completeTask,
                 ),
                 const Spacer(),
                 Row(
