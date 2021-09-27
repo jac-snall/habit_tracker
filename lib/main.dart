@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
       ),
       home: _getStartScreen(),
       routes: {
+        '/startview': (context) => const StartView(),
         '/home': (context) => const HomeView(),
         '/calender': (context) => const CalenderView(),
         '/info': (context) => const InfoView(),

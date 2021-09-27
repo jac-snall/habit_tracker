@@ -65,14 +65,11 @@ class _HomeViewState extends State<HomeView> {
               ),
               onTap: _completeTask,
             ),
-            SizedBox(
-              height: 50,
-              child: AnimatedTextKit(
-                animatedTexts: [
-                  FadeAnimatedText('Tap to complete'),
-                ],
-                repeatForever: true,
-              ),
+            AnimatedTextKit(
+              animatedTexts: [
+                FadeAnimatedText('Tap to complete'),
+              ],
+              repeatForever: true,
             ),
           ];
 
@@ -98,38 +95,38 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/calender');
-                      },
-                      child: const Icon(
-                        Icons.today,
-                        size: 40,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/calender');
+                        },
+                        child: const Icon(
+                          Icons.today,
+                          size: 40,
+                        ),
+                        style: TextButton.styleFrom(
+                          minimumSize: const Size(120, 60),
+                        ),
                       ),
-                      style: TextButton.styleFrom(
-                        minimumSize: const Size(120, 60),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/info');
+                        },
+                        child: const Icon(
+                          Icons.info_outline,
+                          size: 40,
+                        ),
+                        style: TextButton.styleFrom(
+                          minimumSize: const Size(120, 60),
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/info');
-                      },
-                      child: const Icon(
-                        Icons.info_outline,
-                        size: 40,
-                      ),
-                      style: TextButton.styleFrom(
-                        minimumSize: const Size(120, 60),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                Container(
-                  height: 25,
-                )
               ],
             ),
           ),
