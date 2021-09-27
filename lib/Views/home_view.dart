@@ -85,7 +85,10 @@ class _HomeViewState extends State<HomeView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                Text('I want to $habitName'),
+                Text(
+                  'I want to $habitName',
+                  textAlign: TextAlign.center,
+                ),
                 const Spacer(),
                 Flexible(
                   flex: 5,

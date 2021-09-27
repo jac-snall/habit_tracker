@@ -22,6 +22,7 @@ class CalenderView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
                 flex: 2,
@@ -34,6 +35,7 @@ class CalenderView extends StatelessWidget {
                 child: Text(
                   'Current streak: ${currentStreak.toString()}\n'
                   'Longest streak: ${longestStreak.toString()}',
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
